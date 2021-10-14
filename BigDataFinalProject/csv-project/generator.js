@@ -61,66 +61,68 @@
 
 
 // enum items //
-const items = [   
-     "Doll",
-     "Cup",
-     "Keyboard",
-     "Watch",
-     "Notebook",
-     "Screen",
-     "Printer",
-     "Bag",
-     "Chair",
-     "Towel",
-     "Bucket",
-     "Charger",
-     "Knife",
-     "Matress",
-     "Table",
-     "Tooth Brush",
-     "Vase",
-     "Bracelet",
-     "Wallet",
-     "Letherman",
-     "Calculator",
-     "Perfume",
-     "Fan",
-     "Sunglasses",
-     "Flag",
-     "Surff Board",
-     "Statue",
-     "Jar",
-     "C-Hub",
-     "Pants",
-     "T-Shirt",
-     "Underwear",
-     "Sneakers",
-     "Mouse",
-     "Electric Scooter",
-     "Electric Drill",
-     "Shampoo",
-     "Razor",
-     "Deodorant",
-     "Toilet Paper",
-     "EarBuds",
-     "Usb Cable",
-     "HeadPhones",
-     "Remote Control",
-     "Covid Masks",
-     "Bottle",
-     "HDMI Cable",
-     "Pens",
-     "Ball",
-     "IPad",
-     "Laptop",
-     "Speaker" 
+const items = [
+    "Doll",
+    "Cup",
+    "Keyboard",
+    "Watch",
+    "Notebook",
+    "Screen",
+    "Printer",
+    "Bag",
+    "Chair",
+    "Towel",
+    "Bucket",
+    "Charger",
+    "Knife",
+    "Matress",
+    "Table",
+    "Tooth Brush",
+    "Vase",
+    "Bracelet",
+    "Wallet",
+    "Letherman",
+    "Calculator",
+    "Perfume",
+    "Fan",
+    "Sunglasses",
+    "Flag",
+    "Surff Board",
+    "Statue",
+    "Jar",
+    "C-Hub",
+    "Pants",
+    "T-Shirt",
+    "Underwear",
+    "Sneakers",
+    "Mouse",
+    "Electric Scooter",
+    "Electric Drill",
+    "Shampoo",
+    "Razor",
+    "Deodorant",
+    "Toilet Paper",
+    "EarBuds",
+    "Usb Cable",
+    "HeadPhones",
+    "Remote Control",
+    "Covid Masks",
+    "Bottle",
+    "HDMI Cable",
+    "Pens",
+    "Ball",
+    "IPad",
+    "Laptop",
+    "Speaker"
 ];
 
 
 // Select random items
 function getitems() {
-    var numOfitems =  Math.floor(Math.random() * Object.keys(items).length)
-    if (numOfitems == 0) {numOfitems = 1}
+    // var numOfitems = Math.floor(Math.random() * Object.keys(items).length)
+    
+    var numOfitems = Math.floor(Math.random() * 15)
+    if (numOfitems == 0) { numOfitems = 1 }
     const shuffled = items.sort(() => 0.5 - Math.random());
     let selectedItems = shuffled.slice(0, numOfitems);
     return selectedItems;
@@ -128,16 +130,16 @@ function getitems() {
 
 
 //-------------------------------Create Package (Main function)---------------------------------------------//
-function create_Package(){
-
-    var Items           = getitems();
+function create_Package() {
+    var Items = getitems();
     // return JSON.stringify(Items)
-    return Items
+    return Items;
 }
 
 
+
 module.exports = {
-   createPackage: create_Package
+    createPackage : create_Package
 };
 
 
