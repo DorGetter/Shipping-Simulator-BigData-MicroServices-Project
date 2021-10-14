@@ -1,0 +1,180 @@
+<html>
+
+<head>
+
+
+    <span>
+        <% var title_c=sizes[0].title; %>
+    </span>
+    <span>
+        <% var small_c=sizes[0].small; %>
+    </span>
+    <span>
+        <% var medium_c=sizes[0].medium; %>
+    </span>
+    <span>
+        <% var large_c=sizes[0].large; %>
+    </span>
+
+    <span>
+        <% var title_n=sizes[1].title; %>
+    </span>
+    <span>
+        <% var small_n=sizes[1].small; %>
+    </span>
+    <span>
+        <% var medium_n=sizes[1].medium; %>
+    </span>
+    <span>
+        <% var large_n=sizes[1].large; %>
+    </span>
+
+    <span>
+        <% var title_s=sizes[2].title; %>
+    </span>
+    <span>
+        <% var small_s=sizes[2].small; %>
+    </span>
+    <span>
+        <% var medium_s=sizes[2].medium; %>
+    </span>
+    <span>
+        <% var large_s=sizes[2].large; %>
+    </span>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+        // Load Charts and the corechart package.
+        google.charts.load('current', { 'packages': ['corechart'] });
+
+        // Draw the pie chart for Sarah's pizza when Charts is loaded.
+        google.charts.setOnLoadCallback(drawSarahChart);
+
+        // Draw the pie chart for the Anthony's pizza when Charts is loaded.
+        google.charts.setOnLoadCallback(drawAnthonyChart);
+
+        // Draw the pie chart for the Anthony's pizza when Charts is loaded.
+        google.charts.setOnLoadCallback(drawAnthonyChart2);
+
+
+
+        // variables: 
+
+        var t_c = ' <%= title_c %> ';
+        var s_c =   <%= small_c  %>;       //var test is now assigned to getTest which will only work on browsers
+        var m_c =   <%= medium_c  %>;     //var test is now assigned to getTest which will only work on browsers       
+        var l_c =   <%= large_c  %>;     //var test is now assigned to getTest which will only work on browsers
+
+        var t_n = ' <%= title_c %> ';
+        var s_n =   <%= small_n  %>;       //var test is now assigned to getTest which will only work on browsers
+        var m_n =   <%= medium_n  %>;     //var test is now assigned to getTest which will only work on browsers       
+        var l_n =   <%= large_n  %>;     //var test is now assigned to getTest which will only work on browsers
+
+        var t_s = ' <%= title_c %> ';
+        var s_s =   <%= small_s  %>;       //var test is now assigned to getTest which will only work on browsers
+        var m_s =   <%= medium_s  %>;     //var test is now assigned to getTest which will only work on browsers       
+        var l_s =   <%= large_s  %>;     //var test is now assigned to getTest which will only work on browsers
+
+
+        // Callback that draws the pie chart for Sarah's pizza.
+        function drawSarahChart() {
+
+            // Create the data table for Sarah's pizza.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'size');
+            data.addColumn('number', 'packages');
+            data.addRows([
+                ['small', s_c],
+                ['medium', m_c],
+                ['large', l_c]
+            ]);
+
+            // Set options for Sarah's pie chart.
+            var options = {
+                title: 'Center packages size distribution',
+                is3D: true,
+                width: 500,
+                height: 300
+            };
+
+            // Instantiate and draw the chart for Sarah's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('center_size_dist'));
+            chart.draw(data, options);
+        }
+
+        // Callback that draws the pie chart for Anthony's pizza.
+        function drawAnthonyChart() {
+
+            // Create the data table for Anthony's pizza.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'size');
+            data.addColumn('number', 'packages');
+            data.addRows([
+                ['small', s_n],
+                ['medium', m_n],
+                ['large', l_n]
+            ]);
+
+            // Set options for Anthony's pie chart.
+            var options = {
+                title: 'North packages size distribution',
+                is3D: true,
+                width: 500,
+                height: 300
+            };
+
+            // Instantiate and draw the chart for Anthony's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('north_size_dist'));
+            chart.draw(data, options);
+        }
+
+
+        // Callback that draws the pie chart for Anthony's pizza.
+        function drawAnthonyChart2() {
+
+            // Create the data table for Anthony's pizza.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'size');
+            data.addColumn('number', 'packages');
+            data.addRows([
+                ['small', s_s],
+                ['medium', m_s],
+                ['large', l_s]
+            ]);
+
+            // Set options for Anthony's pie chart.
+            var options = {
+                title: 'South packages size distribution',
+                is3D: true,
+                width: 500,
+                height: 300
+            };
+
+            // Instantiate and draw the chart for Anthony's pizza.
+            var chart = new google.visualization.PieChart(document.getElementById('south_size_dist'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+
+<body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns" margin-left: auto; margin-right: auto;>
+        <tr style="padding-left: 2ex;">
+            <td style="margin-left: 10ex;">
+                <div id="center_size_dist" style="border: 2px solid rgb(46, 135, 187)"></div>
+            </td>
+            <td style="margin-left: 10ex;">
+                <div id="north_size_dist" style="border: 2px solid rgb(46, 135, 187)"></div>
+            </td>
+            <td style="margin-left: 10ex;">
+                <div id="south_size_dist" style="border: 2px solid rgb(46, 135, 187)"></div>
+            </td>
+
+        </tr>
+    </table>
+</body>
+
+</html>

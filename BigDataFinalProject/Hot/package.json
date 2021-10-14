@@ -1,0 +1,24 @@
+{
+  "name": "dash2021",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/storage": "^5.14.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "jimp": "^0.16.1",
+    "mongodb": "^4.1.1",
+    "net": "^1.0.2",
+    "nodemon": "^2.0.12",
+    "qrcode-reader": "^1.0.4",
+    "redis": "^3.1.2",
+    "socket.io": "^4.2.0"
+  }
+}

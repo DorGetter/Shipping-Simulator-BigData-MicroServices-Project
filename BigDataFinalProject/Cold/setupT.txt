@@ -1,0 +1,6 @@
+npm init
+npm i express nodemon ejs mongodb net qrcode-reader jimp
+//+-- ejs@3.1.6
++-- express@4.17.1
++-- mongodb@4.1.1
+`-- nodemon@2.0.12//
