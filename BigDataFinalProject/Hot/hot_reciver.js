@@ -19,7 +19,6 @@ var data = {
         {title: 'center' , small: 12, medium: 4, large: 23},
         {title: 'north' , small: 20, medium: 10, large: 40},
         {title: 'south' , small: 30, medium: 10, large:120},
-
     ]
 }
 
@@ -85,8 +84,6 @@ app.use(express.static('public')) //who is our view engine
 app.get('/', (req, res) => {
 
     // https://materializecss.com/icons.html <- icons
-
-    
     res.render('pages/dashboard', data);
 
   })

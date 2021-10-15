@@ -2,6 +2,46 @@
 
 // enum items //
 const items = [   
+    
+    {"type": "Cup",              "cost": 6,     "size": "S"},
+    {"type": "Keyboard",             "cost": 15,     "size": "S"},
+    {"type": "Watch",             "cost": 15,     "size": "S"},
+    {"type": "Notebook",             "cost": 15,     "size": "S"},
+    {"type": "Screen",             "cost": 15,     "size": "S"},
+    {"type": "Printer",             "cost": 15,     "size": "S"},
+    {"type": "Bag",             "cost": 15,     "size": "S"},
+    {"type": "Chair",             "cost": 15,     "size": "S"},
+    {"type": "Towel",             "cost": 15,     "size": "S"},
+    {"type": "Bucket",             "cost": 15,     "size": "S"},
+    {"type": "Charger",             "cost": 15,     "size": "S"},
+    {"type": "Knife",             "cost": 15,     "size": "S"},
+    {"type": "Matress",             "cost": 15,     "size": "S"},
+    {"type": "Table",             "cost": 15,     "size": "S"},
+    {"type": "Tooth Brush",             "cost": 15,     "size": "S"},
+    {"type": "Vase",             "cost": 15,     "size": "S"},
+    {"type": "Bracelet",             "cost": 15,     "size": "S"},
+    {"type": "Wallet",             "cost": 15,     "size": "S"},
+    {"type": "Letherman",             "cost": 15,     "size": "S"},
+    {"type": "Calculator",             "cost": 15,     "size": "S"},
+    {"type": "Perfume",             "cost": 15,     "size": "S"},
+    {"type": "Fan",             "cost": 15,     "size": "S"},
+    {"type": "Sunglasses",             "cost": 15,     "size": "S"},
+    {"type": "Flag",             "cost": 15,     "size": "S"},
+    {"type": "Surff Board",             "cost": 15,     "size": "S"},
+    {"type": "Statue",             "cost": 15,     "size": "S"},
+    {"type": "Jar",             "cost": 15,     "size": "S"},
+    {"type": "C-Hub",             "cost": 15,     "size": "S"},
+    {"type": "Pants",             "cost": 15,     "size": "S"},
+    {"type": "T-Shirt",             "cost": 15,     "size": "S"},
+    {"type": "Underwear",             "cost": 15,     "size": "S"},
+    {"type": "Sneakers",             "cost": 15,     "size": "S"},
+    {"type": "Mouse",             "cost": 15,     "size": "S"},
+    {"type": "Electric Scooter",             "cost": 15,     "size": "S"},
+    {"type": "Electric Drill",             "cost": 15,     "size": "S"},
+    {"type": "Shampoo",             "cost": 15,     "size": "S"},
+    {"type": "Razor",             "cost": 15,     "size": "S"},
+    {"type": "Deodorant",             "cost": 15,     "size": "S"},
+    {"type": "Toilet Paper",             "cost": 15,     "size": "S"},
     {"description": "Doll",             "cost": 15,     "size": "S"},
     {"description": "EarBuds",          "cost": 50,     "size": "S"},
     {"description": "Usb Cable",        "cost": 6,      "size": "S"},
@@ -38,14 +78,40 @@ let adresses = {
     a11:    "Yefe-Nof 41 Ashkelon",
     a12:    "Tel Hai 111 Beer Sheva",
     a13:    "Sderot Argaman 44 Eilat",
-    a14:    "Nahal 5 Kiryat Gat"
+    a14:    "Nahal 5 Kiryat Gat",
+
+    // Heifa
+    a15:   "",
+    a16:   "",
+    a17:   "",
+    a18:   "",
+    a19:   "",
+    
+
+    // Jerusalem
+    a20:   "",
+    a21:   "",
+    a22:   "",
+    a23:   "",
+    a24:   "",
+    
+
+    // Dan
+    a25:   "",
+    a26:   "",
+    a27:   "",
+    a28:   "",
+    a29:   "",
 };
 
 // enum regions //
 const regions = [
     "center", // needs to add: 'jerusalem', 'dan', 'haifa'
     "north",
-    "south"
+    "south",
+    "heifa",
+    "jerusalem",
+    "dan"
 ];
 
 
@@ -138,9 +204,19 @@ function getRegion(adr_num) {
     else if(adr_num < 10){
         return regions[1]; 
     }
-    else{
+    else if(adr_num < 15){
         return regions[2]; 
     }
+    else if(adr_num < 20){
+        return regions[3]; 
+    }
+    else if(adr_num < 25){
+        return regions[4]; 
+    }
+    else {
+        return regions[5];
+    }
+
 }
 
 

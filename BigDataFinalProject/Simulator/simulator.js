@@ -34,7 +34,7 @@ const uploadFile = async() => {
         },});
 }
 
-function sendMongo(pack, index){
+function sendFirebase(pack, index){
     filename = "order"+index+".png"
     qr_gen.createqrCode(pack, filename);
     uploadFile();
@@ -65,7 +65,7 @@ function sendRedis(pack){
 
 function Arrived2Destination(package, index){
     setTimeout(function () {
-        sendMongo(package, index);
+        sendFirebase(package, index);
         console.log("package number: " , index, " arrived to destination. ")
     }, 90000)
 }
