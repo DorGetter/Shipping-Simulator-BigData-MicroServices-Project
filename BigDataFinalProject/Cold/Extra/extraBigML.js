@@ -4,7 +4,7 @@
 var bigml = require('bigml');
 
 const { render } = require('ejs');
-const { createPackage } = require('../../Simulator/generators/package_generator');
+const { createPackage } = require('../Simulator/generators/package_generator');
 
 var connection = new bigml.BigML('BigDataCourse2021',
     'ad08ca86c30c5a51417e95ea2dd5e12ab6d461c7')
