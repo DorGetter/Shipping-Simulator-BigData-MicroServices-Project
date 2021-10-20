@@ -35,6 +35,3 @@ console.log(ans)
 module.exports = {
     get_prediction: get_prediction
 };
-
-
-

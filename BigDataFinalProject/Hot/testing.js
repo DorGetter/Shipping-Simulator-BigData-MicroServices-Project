@@ -1,3 +1,8 @@
-var params = [0,1,2]
+var app = require('express')();
+var redis = require('redis');
+var redisClient = redis.createClient();
+var DownloadFireBase = require('../Firebase/fireBaseAssist')
 
-console.log(params[1])
+redisClient.subscribe('message');
+
+DownloadFireBase.firebaseMain()

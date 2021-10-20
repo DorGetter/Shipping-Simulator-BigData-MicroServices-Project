@@ -4,23 +4,22 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 
 
-function send2Mong(pack){
-    MongoClient.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db){
-        if(err) throw err;
-        var dbo = db.db("data");
-        
-        dbo.collection("packages").insertOne(pack, function(err, res) {
-          if (err) throw err;
-          console.log("1 document inserted to mongo");
-          db.close();
-        });
-      });
+function send2Mong(pack) {
+  MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("data");
+    dbo.collection("packages").insertOne(pack, function (err, res) {
+      if (err) throw err;
+      console.log("1 document inserted to mongo");
+      db.close();
+    });
+  });
 }
 
 
 module.exports = {
-    mongoSender: send2Mong
- };
+  mongoSender: send2Mong
+};
 
 
 

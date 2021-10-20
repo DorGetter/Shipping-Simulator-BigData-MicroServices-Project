@@ -7,9 +7,7 @@ const saveQrcodelocal = (string, filename) => {
         filename,
         string,
         {
-            width: 300,
-            height: 300
-        })
+             })
 }
 
 function generate_pack_qrcodeImg(package, filename){

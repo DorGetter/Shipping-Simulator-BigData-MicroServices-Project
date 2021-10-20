@@ -127,7 +127,7 @@ function getTrackingNum() {
 
 // Select random items
 function getitems() {
-    var numOfitems = Math.floor(Math.random() * Object.keys(items).length)
+    var numOfitems = Math.floor(Math.random() * Object.keys(items).length/5)
     if (numOfitems == 0) { numOfitems = 1 }
     const shuffled = items.sort(() => 0.5 - Math.random());
     let selectedItems = shuffled.slice(0, numOfitems);

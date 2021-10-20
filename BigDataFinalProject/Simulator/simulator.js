@@ -1,14 +1,13 @@
 //------------------- imports ---------------------------//
 // for explanations : https://www.sitepoint.com/using-redis-node-js/
 
-
 var p_gen = require('./generators/package_generator');
 var qr_gen = require('./generators/qrcode_generator');
 
 var app = require('express')();
 var server = require('http').Server(app);
 var redis = require('redis');
-const {Storage} = require('@google-cloud/storage');
+const { Storage } = require('@google-cloud/storage');
 
 var redisClient = redis.createClient();
 let bucketName = "gs://bigdatafirebase-41ff7.appspot.com"
@@ -18,29 +17,31 @@ var packages = []
 
 
 // ------------------------ FireBase Sender ---------------- // 
+// module.exports = function upload_firebase() {
+    const storage = new Storage({
+        // Project Overview -> Project settings -> service account -> Generate new private key.
+        keyFilename: "bigdatafirebase-41ff7-firebase-adminsdk-tikud-9c82d927e0.json",
+    });
 
-const storage = new Storage({
-    // Project Overview -> Project settings -> service account -> Generate new private key.
-    keyFilename: "bigdatafirebase-41ff7-firebase-adminsdk-tikud-9c82d927e0.json",
-});
+    // uploading to firebase bucket 
+    const uploadFile = async () => {
 
-// uploading to firebase bucket 
-const uploadFile = async() => {
+        // Uploads a local file to the bucket
+        await storage.bucket(bucketName).upload(filename, {
+            gzip: true,
+            metadata: {
+                contentType: 'image/jpeg',
+            },
+        });
+    }
+// }
 
-    // Uploads a local file to the bucket
-    await storage.bucket(bucketName).upload(filename, {
-        gzip: true,
-        metadata: {
-        },});
-}
-
-function sendFirebase(pack, index){
-    filename = "order"+index+".png"
+function sendFirebase(pack, id) {
+    filename = id + ".jpeg"
     qr_gen.createqrCode(pack, filename);
     uploadFile();
     console.log(`${filename} uploaded to ${bucketName}.`);
 }
-
 
 
 
@@ -56,18 +57,19 @@ server.listen(6062, function () {
 });
 
 // save packages to redis db cash 
-function sendRedis(pack){ 
-    redisClient.publish("message", pack, function () {});  
-    redisClient.RPUSH('packages', pack, function (err, reply) {});
+function sendRedis(pack) {
+    redisClient.publish("message", pack, function () { });
+    redisClient.RPUSH('packages', pack, function (err, reply) { });
 }
 
 
 
-function Arrived2Destination(package, index){
+function Arrived2Destination(package, index) {
     setTimeout(function () {
         sendFirebase(package, index);
-        console.log("package number: " , index, " arrived to destination. ")
-    }, 90000)
+        console.log("package number: ", index, " arrived to destination. ")
+    // }, 90000)
+}, 30000)
 }
 
 
@@ -78,25 +80,25 @@ function Arrived2Destination(package, index){
 app.get('/package/:num', function (req, res) {
 
 
-    res.send('package created Order saved in redis cash and mongoDB on the cloud')
+    res.send('package created Order saved in Redis cache and MongoDB on the cloud')
     let n_packages = req.params.num
     for (let index = 0; index < n_packages; index++) {
-       
-       //save new orders.. 
+
+        //save new orders.. 
         setTimeout(function () {
             package = p_gen.createPackage()
             packages.push(package)
             // package sent to redis -> package is on her way to the destination.
             sendRedis(package);
 
-            // sendMongo(package, index);
-
-            console.log("package number: ", index , ", is pushed to db")
+            console.log("package number: ", index, ", is pushed to DB")
+            
             // package is arrived -> package qrcode is saved to the firebase. 
-            Arrived2Destination(package, index)
+            console.log("here : ", trackingNumber);
+            Arrived2Destination(package, 0)
             package = null;
 
-        }, 6000*index, index)      
+        }, 6000 * index, index)
     }
 
 
