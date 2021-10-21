@@ -18,29 +18,38 @@ var packages = []
 
 // ------------------------ FireBase Sender ---------------- // 
 // module.exports = function upload_firebase() {
-    const storage = new Storage({
-        // Project Overview -> Project settings -> service account -> Generate new private key.
-        keyFilename: "bigdatafirebase-41ff7-firebase-adminsdk-tikud-9c82d927e0.json",
+const storage = new Storage({
+    // Project Overview -> Project settings -> service account -> Generate new private key.
+    keyFilename: "bigdatafirebase-41ff7-firebase-adminsdk-tikud-9c82d927e0.json",
+});
+
+// uploading to firebase bucket 
+const uploadFile = async () => {
+    console.log("uploading");
+    // Uploads a local file to the bucket
+    await storage.bucket(bucketName).upload(filename, {
+        // gzip: true,
+        metadata: {
+            // contentType: 'image/JPEG',
+            // cacheControl: 'public, max-age=31536000',
+        },
     });
+}
 
-    // uploading to firebase bucket 
-    const uploadFile = async () => {
 
-        // Uploads a local file to the bucket
-        await storage.bucket(bucketName).upload(filename, {
-            gzip: true,
-            metadata: {
-                contentType: 'image/jpeg',
-            },
-        });
-    }
-// }
 
-function sendFirebase(pack, id) {
-    filename = id + ".jpeg"
-    qr_gen.createqrCode(pack, filename);
-    uploadFile();
+
+
+
+
+
+
+
+async function sendFirebase(pack, id) {
+    
+    await uploadFile();
     console.log(`${filename} uploaded to ${bucketName}.`);
+
 }
 
 
@@ -62,14 +71,14 @@ function sendRedis(pack) {
     redisClient.RPUSH('packages', pack, function (err, reply) { });
 }
 
+async function Arrived2Destination(package, id) {
+    filename = id + ".JPEG";
+    await qr_gen.createqrCode(package, filename);
 
-
-function Arrived2Destination(package, index) {
     setTimeout(function () {
-        sendFirebase(package, index);
-        console.log("package number: ", index, " arrived to destination. ")
-    // }, 90000)
-}, 30000)
+        sendFirebase(package, id);
+        console.log("package number: ", id, " arrived to destination. ")
+    }, 3000)
 }
 
 
@@ -78,30 +87,25 @@ function Arrived2Destination(package, index) {
 
 // get amount of packages and send to redis & fireBase
 app.get('/package/:num', function (req, res) {
-
-
     res.send('package created Order saved in Redis cache and MongoDB on the cloud')
-    let n_packages = req.params.num
-    for (let index = 0; index < n_packages; index++) {
-
+    let n_packages = req.params.num;
+    for (let index = 1; index <= n_packages; index++) {
         //save new orders.. 
         setTimeout(function () {
             package = p_gen.createPackage()
+            let trackingNum = package['trackingNumber']
+            package = JSON.stringify(package)
             packages.push(package)
             // package sent to redis -> package is on her way to the destination.
             sendRedis(package);
-
             console.log("package number: ", index, ", is pushed to DB")
-            
             // package is arrived -> package qrcode is saved to the firebase. 
-            console.log("here : ", trackingNumber);
-            Arrived2Destination(package, 0)
-            package = null;
+            // console.log("here : ", trackingNumber);
 
+            Arrived2Destination(package, trackingNum).catch(error => console.error(error.stack));
+            package = null;
         }, 6000 * index, index)
     }
-
-
 });
 
 // default dropping page 

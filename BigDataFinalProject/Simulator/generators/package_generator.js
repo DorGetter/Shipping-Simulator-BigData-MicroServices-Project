@@ -233,13 +233,13 @@ function create_Package() {
 
     }
 
-    var package_Json = JSON.stringify(package)
-    return package_Json
+    // var package_Json = JSON.stringify(package)
+    // return package_Json
+    return package
 }
 
 
 module.exports = {
     createPackage: create_Package
 };
-
 

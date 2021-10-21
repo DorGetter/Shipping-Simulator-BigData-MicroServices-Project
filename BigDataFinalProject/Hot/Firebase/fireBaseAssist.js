@@ -22,51 +22,61 @@ const storage = new Storage({
 });
 
 const bucket = storage.bucket(bucketName);
-const dir = './';
+const dir = './SavedQRCodes/';
 
 
 
-const firebaseMain = async () => {
-    try {
-        fs.rmdirSync(dir, { recursive: true });
-    }
-    catch (err) {
-        console.error(`Error while trying to delete: ${dir}.`);
-    }
-    fs.mkdir(dir, function (err) {
-        if (err) { console.log(err) }
-    });
+// const firebaseMain = async (next) => {
 
-    const [files] = await bucket.getFiles();
-    files.forEach(file => {
-        // let filename = file.name;
-        // let dest = dir + filename;
-        let options = { destination: dir + file.name, };
-        bucket.file(file.name).download(options);
-        // let key = read_QRCode.readQRCodes(filename).tracking_number;
-        // delete_Redis(key);
-        bucket.file(file.name).delete();
+//     // try {
+//     //     fs.rmdirSync(dir, { recursive: true });
+//     // }
+//     // catch (err) {
+//     //     console.error(`Error while trying to delete: ${dir}.`);
+//     // }
+//     try {
+//         fs.mkdir(dir, function (err) {
+//             if (err) { console.log(err) }
+//         });
 
-    })
-}
+//         const [files] = await bucket.getFiles();
+//         files.forEach(file => {
+//             // let filename = file.name;
+//             // let dest = dir + filename;
+//             let options = { destination: dir + file.name, };
+//             await bucket.file(file.name).download(options);
+//             // let key = read_QRCode.readQRCodes(filename).tracking_number;
+//             // delete_Redis(key);
+//             // bucket.file(file.name).delete();
+//         })
+//     } catch (err) {
+//         next(err);
+//     }
+// }
 
-firebaseMain().catch(error => console.error(error.stack));
+firebaseMain()
+//.catch(error => console.error(error.stack));
 
 module.exports = {
     firebaseMain: firebaseMain
 };
 
 
+async function firebaseMain(next) {
+    try {
+        fs.mkdir(dir, function (err) {
+            if (err) { console.log(err) }
+        });
 
-
-
-
-
-
-
-
-
-
-
-
-
+        const [files] = await bucket.getFiles();
+        await Promise.all(files.map(async (file) => {
+            let options = { destination: dir + file.name, };
+            await bucket.file(file.name).download(options);
+            // let key = read_QRCode.readQRCodes(filename).tracking_number;
+            // delete_Redis(key);
+            bucket.file(file.name).delete();
+        }))
+    } catch (err) {
+        next(err);
+    }
+}
