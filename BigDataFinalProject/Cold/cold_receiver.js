@@ -13,6 +13,16 @@ redisClient.subscribe('message');
 
 
 
+// var data = {
+//     table: [
+//         { title: "North", value: 0, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "arrow_back" },
+//         { title: "Center", value: 1, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "addiccall" },
+//         { title: "South", value: 2, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" },
+//         { title: "Haifa", value: 3, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" },
+//         { title: "Jerusalem", value: 4, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" },
+//         { title: "Dan", value: 5, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" }
+//     ]
+// }
 
 
 
@@ -24,37 +34,6 @@ redisClient.on("message", function (channel, data) {
 });
 
 
-
-// {
-//     trackingNumber: 21433123,
-//     items: [
-//       { description: 'Usb Cable', cost: 6, size: 'S' },
-//       { type: 'Jar', cost: 15, size: 'S' },
-//       { description: 'Bottle', cost: 8, size: 'S' },
-//       { type: 'Towel', cost: 15, size: 'S' },
-//       { type: 'Cup', cost: 6, size: 'S' },
-//       { type: 'Shampoo', cost: 15, size: 'S' },
-//       { type: 'Notebook', cost: 15, size: 'S' },
-//       { type: 'Deodorant', cost: 15, size: 'S' },
-//       { description: 'Doll', cost: 15, size: 'S' },
-//       { type: 'Pants', cost: 15, size: 'S' },
-//       { type: 'Watch', cost: 15, size: 'S' },
-//       { type: 'Underwear', cost: 15, size: 'S' },
-//       { type: 'Electric Drill', cost: 15, size: 'S' },
-//       { type: 'Calculator', cost: 15, size: 'S' },
-//       { description: 'HeadPhones', cost: 12, size: 'S' }
-//     ],
-//     size: 'M',
-//     orderCost: 197,
-//     importTax: 'Taxable package',
-//     adrass: 'Tel Hai 111 Beer Sheva',
-//     destinationRegion: 'south'
-//   }
-
-
-
-
-
 redisClient.on('connect', function() {
     console.log('Receiver connected to Redis');
 });
@@ -62,9 +41,6 @@ redisClient.on('connect', function() {
 server.listen(6061, function() {
     console.log('Receiver is running on port 6061');
 });
-
-
-
 
 // ------ dash board ----- //
 

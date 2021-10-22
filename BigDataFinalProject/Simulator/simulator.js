@@ -66,13 +66,14 @@ server.listen(6062, function () {
 });
 
 // save packages to redis db cash 
-function sendRedis(pack) {
-    redisClient.publish("message", pack, function () { });
-    redisClient.RPUSH('packages', pack, function (err, reply) { });
+function sendRedis(pack, trackingNum) {
+    myobj = JSON.parse(pack);
+    redisClient.publish("message", myobj, function () { });
+    redisClient.set(trackingNum, pack, function (err, reply) { });
 }
 
 async function Arrived2Destination(package, id) {
-    filename = id + ".JPEG";
+    filename = id + ".png";
     await qr_gen.createqrCode(package, filename);
 
     setTimeout(function () {
@@ -90,14 +91,15 @@ app.get('/package/:num', function (req, res) {
     res.send('package created Order saved in Redis cache and MongoDB on the cloud')
     let n_packages = req.params.num;
     for (let index = 1; index <= n_packages; index++) {
-        //save new orders.. 
+        //save new orders...
         setTimeout(function () {
             package = p_gen.createPackage()
             let trackingNum = package['trackingNumber']
             package = JSON.stringify(package)
-            packages.push(package)
+
+            // packages.push(package)
             // package sent to redis -> package is on her way to the destination.
-            sendRedis(package);
+            sendRedis(package, trackingNum);
             console.log("package number: ", index, ", is pushed to DB")
             // package is arrived -> package qrcode is saved to the firebase. 
             // console.log("here : ", trackingNumber);

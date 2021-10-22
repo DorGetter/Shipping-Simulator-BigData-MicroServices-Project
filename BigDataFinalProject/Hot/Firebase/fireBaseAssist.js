@@ -1,19 +1,15 @@
 //------------------- imports ---------------------------//
 // for explanations : https://www.sitepoint.com/using-redis-node-js/
 
-
-
-
 // get all files from the FireBase and save them localy
 
 
 const { Storage } = require('@google-cloud/storage');
 var fs = require('fs');
 var QrCode = require('qrcode-reader');
-// var read_QRCode = require('./readQRCode.js')
-// var delete_Redis = require("../Redis/deleteFromRedis.js");
+// var read_QRCode = require('./testing.js')
+var delete_Redis = require("./Redis/deleteFromRedis");
 var qr = new QrCode();
-
 
 let bucketName = "gs://bigdatafirebase-41ff7.appspot.com"
 const storage = new Storage({
@@ -25,44 +21,7 @@ const bucket = storage.bucket(bucketName);
 const dir = './SavedQRCodes/';
 
 
-
-// const firebaseMain = async (next) => {
-
-//     // try {
-//     //     fs.rmdirSync(dir, { recursive: true });
-//     // }
-//     // catch (err) {
-//     //     console.error(`Error while trying to delete: ${dir}.`);
-//     // }
-//     try {
-//         fs.mkdir(dir, function (err) {
-//             if (err) { console.log(err) }
-//         });
-
-//         const [files] = await bucket.getFiles();
-//         files.forEach(file => {
-//             // let filename = file.name;
-//             // let dest = dir + filename;
-//             let options = { destination: dir + file.name, };
-//             await bucket.file(file.name).download(options);
-//             // let key = read_QRCode.readQRCodes(filename).tracking_number;
-//             // delete_Redis(key);
-//             // bucket.file(file.name).delete();
-//         })
-//     } catch (err) {
-//         next(err);
-//     }
-// }
-
-firebaseMain()
-//.catch(error => console.error(error.stack));
-
-module.exports = {
-    firebaseMain: firebaseMain
-};
-
-
-async function firebaseMain(next) {
+async function firebaseMain() {
     try {
         fs.mkdir(dir, function (err) {
             if (err) { console.log(err) }
@@ -70,13 +29,19 @@ async function firebaseMain(next) {
 
         const [files] = await bucket.getFiles();
         await Promise.all(files.map(async (file) => {
-            let options = { destination: dir + file.name, };
-            await bucket.file(file.name).download(options);
-            // let key = read_QRCode.readQRCodes(filename).tracking_number;
-            // delete_Redis(key);
-            bucket.file(file.name).delete();
+            let filename = file.name
+            let options = { destination: dir + filename, };
+            await bucket.file(filename).download(options);
+            var key = filename.replace('.png', '');
+            // console.log("pack Assist: " , pack);
+            await delete_Redis(key);
+            await bucket.file(filename).delete();
         }))
     } catch (err) {
-        next(err);
     }
 }
+
+firebaseMain().catch(error => console.error(error.stack));
+
+module.exports.firebaseMain = firebaseMain;
+

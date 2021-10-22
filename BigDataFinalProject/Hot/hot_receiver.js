@@ -3,10 +3,9 @@ var app = require('express')();
 var server = require('http').Server(app);
 var redis = require('redis');
 var redisClient = redis.createClient();
-var DownloadFireBase = require('./Firebase/fireBaseAssit')
+var DownloadFireBase = require('./Firebase/fireBaseAssist')
 
 redisClient.subscribe('message');
-
 
 var data = {
     cards: [
@@ -17,7 +16,6 @@ var data = {
         { title: "Jerusalem", value: 4, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" },
         { title: "Dan", value: 5, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" }
     ],
-
 
 
     sizes: [
