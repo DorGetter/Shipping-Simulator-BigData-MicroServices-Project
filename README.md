@@ -13,7 +13,6 @@
 ## :joystick: *Shipment Simulator:*
 
 * *Run* `node ./simulator.js` *in the Command Line*
-* *Search this URL: http://localhost:3000 to load the Dashboard*
 * *Search this URL: http://localhost:6062/packges/5 to send over packages to Firebase & Redis services* 
   > *(you may choose any number instead of 5 as the number of packages you wish to send over)*
 
