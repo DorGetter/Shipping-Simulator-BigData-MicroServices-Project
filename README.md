@@ -49,14 +49,14 @@
 ![MongoDB Example](https://user-images.githubusercontent.com/66558110/138555235-afd5e8ec-2295-40e5-bf55-e8ed57335f3d.png)
 
 ## :books: *Services used in this project:*
-  *Service:* | *Logo:*
-------------------------------------------------------|----------------------------------------------------
-*[Docker](https://www.docker.com/)* | ![rsz_docker](https://user-images.githubusercontent.com/66558110/138525534-5b80cfff-9cc8-49d8-91ee-56dad30554ac.png)
-*[Redis](https://redis.io/)* | ![rsz_1redis](https://user-images.githubusercontent.com/66558110/138525323-e48deafc-5d80-44cb-881c-543cbb9b4328.png)
-*[Firebase](https://firebase.google.com/)* | ![rsz_firebase](https://user-images.githubusercontent.com/66558110/138526112-1f4f9d97-cc27-4cfa-ae9a-748839022443.png)
-*[MongoDB](https://www.mongodb.com/)* | ![rsz_mongo](https://user-images.githubusercontent.com/66558110/138526141-b3b75e15-ca4c-4a79-b6eb-c76c935b98d8.png)
-*[BigML](https://bigml.com/)* | ![rsz_bigml](https://user-images.githubusercontent.com/66558110/138526204-8149be8b-c540-4a35-b475-b0b94d32e375.png)
-*[Node.js](https://nodejs.org/en/)* | ![rsz_nodejs](https://user-images.githubusercontent.com/66558110/138526220-82e94b3d-72c3-47fc-a698-2d31bfc8cb85.png)
-*[QRCode](https://en.wikipedia.org/wiki/QR_code)* | ![rsz_qrcode](https://user-images.githubusercontent.com/66558110/138526484-f97cda37-1b6c-47b3-9850-ea254c390728.png)
+  *Service:* | *Logo:* | *Explanation:*
+------------------------------------------------------|------------------------------------------------------|------------------------------------------------------
+*__[Docker](https://www.docker.com/)__* | ![rsz_docker](https://user-images.githubusercontent.com/66558110/138525534-5b80cfff-9cc8-49d8-91ee-56dad30554ac.png) | *Docker is a set of platform as a service (PaaS) products that use OS-level virtualization to deliver software in packages called containers.*
+*__[Redis](https://redis.io/)__* | ![rsz_1redis](https://user-images.githubusercontent.com/66558110/138525323-e48deafc-5d80-44cb-881c-543cbb9b4328.png) | *Redis (Remote Dictionary Server) is an in-memory data structure store, used as a distributed, in-memory key–value database, cache and message broker, with optional durability.*
+*__[Firebase](https://firebase.google.com/)__* | ![rsz_firebase](https://user-images.githubusercontent.com/66558110/138526112-1f4f9d97-cc27-4cfa-ae9a-748839022443.png) | *Firebase is a platform developed by Google for creating mobile and web applications. Firebase has launched Cloud Firestore, a real-time document database as the successor product to the original Firebase Realtime Database.*
+*__[MongoDB](https://www.mongodb.com/)__* | ![rsz_mongo](https://user-images.githubusercontent.com/66558110/138526141-b3b75e15-ca4c-4a79-b6eb-c76c935b98d8.png) | *MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas.*
+*__[BigML](https://bigml.com/)__* | ![rsz_bigml](https://user-images.githubusercontent.com/66558110/138526204-8149be8b-c540-4a35-b475-b0b94d32e375.png) | *BigML offers a highly scalable, cloud-based Machine Learning service that is easy to use, seamless to integrate, and instantly actionable. Now everyone can implement data-driven decision making in their applications. BigML works with small and big data.*
+*__[Node.js](https://nodejs.org/en/)__* | ![rsz_nodejs](https://user-images.githubusercontent.com/66558110/138526220-82e94b3d-72c3-47fc-a698-2d31bfc8cb85.png) | *Node.js is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser. Node.js lets developers use JavaScript to write command line tools and for server-side scripting—running scripts server-side to produce dynamic web page content before the page is sent to the user's web browser.*
+*__[QRCode](https://en.wikipedia.org/wiki/QR_code)__* | ![rsz_qrcode](https://user-images.githubusercontent.com/66558110/138526484-f97cda37-1b6c-47b3-9850-ea254c390728.png) | *A QRCode (Quick Response code) is a type of matrix barcode (or two-dimensional barcode). A barcode is a machine-readable optical label that contains information about the item to which it is attached.*
 
 # :octocat: *Enjoy, and please share!* :smile:
