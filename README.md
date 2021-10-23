@@ -11,9 +11,9 @@
 ### *In this project we've created a system which simulates shipment services. This system keeps track on packages shipped from around the world, from the moment of their diparture to the country and until they arrive to the logistic center of the shipment company.*
 
 
-*__SHIPMENT SIMULATOR:__  will simulate scanning of packages before they're sent to the country, and will notify their departure via message. When a package is sent, it will be stored in the Redis database service as cache. To simulate arrival of the package, the Shipment Simulator will generate a random QRCode for each package and store it in Firebase cloud storage.*
+*__SHIPMENT SIMULATOR:__  Will simulate scanning of packages before they're sent to the country, and will notify their departure via message. When a package is sent, it will be stored in the Redis database service as cache. To simulate arrival of the package, the Shipment Simulator will generate a QRCode for each package, which holds all the package's information and store it in Firebase cloud storage.*
 
-*__HOT-LINE:__  The Redis will get updated with every change of the packages' quantity and we'll display the data from Redis in the Dashboard, including statistics such as number of packages per country district, charts and graphs of packages' size distribution per district and type of tax billing distribution per district.*
+*__HOT-LINE:__  We'll display the data from Redis' cache in the Dashboard for every package which is departed to it's destination and update that data in Real-time. The Dashboard also includes statistics such as number of packages per country district, charts and graphs of packages' size distribution per district and type of tax billing distribution per district.*
 
 *__COLD-LINE:__  The packages' information will also be stored in MongoDB database service as history of all shipments. We'll use the data from MongoDB to generate a unique CSV file which holds only the information about the packages' items, the CSV file will be exported to BigML service in order to generate an Associations Model based on Apriori algorithm for frequent item set mining and association rule learning over relational databases, this model will get us prediction of support and confidence for every item.*
 
