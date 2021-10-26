@@ -29,10 +29,9 @@
 * *Run Redis image on Docker using port 6379 - [Guidance ](https://www.youtube.com/watch?v=YhXeiB_1-uk&list=PL9nWRykSBSFjj3mulDfc6Al4v8ORNKzaM&index=2&ab_channel=BeABetterDev)*
 
 ## :joystick: *Shipment Simulator:*
-
 * *Run* `node ./simulator.js` *in the Command Line*
-* *Search this URL: http://localhost:6062/packges/5 to send over packages to Firebase & Redis services* 
-  > *(you may choose any number instead of 5 as the number of packages you wish to send over)*
+* *Search this URL: http://localhost:6060 to send over packages to Firebase & Redis services using the text box* 
+  > *(you may choose any positive round number of packages you wish to send over)*
 
 ## :hot_face: *Hot-line:*
 * *Run* `node ./hot_receiver.js` *in the Command Line*
@@ -40,7 +39,14 @@
 
 ## :cold_face: *Cold-line:*
 * *Run* `node ./cold_receiver.js` *in the Command Line*
-* *Search this URL: http://localhost:3000 to load the `Analytical Views`*
+* *Search this URL: http://localhost:3001 to load the `Analytical Views`*
+
+## :computer: *Dashboard's screenshots:*
+![Dashboard](https://user-images.githubusercontent.com/66558110/138964172-ab856c62-e0c4-41b5-99cd-97ba3d3d2cac.png)
+![Dashboard2](https://user-images.githubusercontent.com/66558110/138967039-c28d6f27-cc43-49ce-8c14-8be74738b535.png)
+
+## :chart_with_upwards_trend: *Analytical Views' screenshots:*
+
 
 ## :thought_balloon: *Example for associations model extracted from BigML service:*
 ![Associations Table](https://user-images.githubusercontent.com/66558110/138527098-8dcc1c17-8e75-46dd-8cef-308a3f4a0561.png)
