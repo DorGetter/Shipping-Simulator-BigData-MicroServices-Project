@@ -29,7 +29,7 @@
 * *Run Redis image on Docker using port 6379 - [Guidance ](https://www.youtube.com/watch?v=YhXeiB_1-uk&list=PL9nWRykSBSFjj3mulDfc6Al4v8ORNKzaM&index=2&ab_channel=BeABetterDev)*
 
 ## :joystick: *Shipment Simulator:*
-* *Run* `node ./simulator.js` *in the Command Line*
+* *Run* `node ./server.js` *in the Command Line*
 * *Search this URL: http://localhost:6060 to send over packages to Firebase & Redis services using the text box* 
   > *(you may choose any positive round number of packages you wish to send over)*
 
