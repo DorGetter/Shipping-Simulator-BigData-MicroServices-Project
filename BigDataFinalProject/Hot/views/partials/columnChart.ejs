@@ -1,0 +1,160 @@
+<html>
+
+<head>
+  <span>
+    <% var title_c=taxes[0].title; %>
+  </span>
+  <span>
+    <% var tax_free_c=taxes[0].tax_free; %>
+  </span>
+  <span>
+    <% var taxable_c=taxes[0].taxable; %>
+  </span>
+  <span>
+    <% var heavy_tax_c=taxes[0].heavy_tax; %>
+  </span>
+
+  <span>
+    <% var title_n=taxes[1].title; %>
+  </span>
+  <span>
+    <% var tax_free_n=taxes[1].tax_free; %>
+  </span>
+  <span>
+    <% var taxable_n=taxes[1].taxable; %>
+  </span>
+  <span>
+    <% var heavy_tax_n=taxes[1].heavy_tax; %>
+  </span>
+
+  <span>
+    <% var title_s=taxes[2].title; %>
+  </span>
+  <span>
+    <% var tax_free_s=taxes[2].tax_free; %>
+  </span>
+  <span>
+    <% var taxable_s=taxes[2].taxable; %>
+  </span>
+  <span>
+    <% var heavy_tax_s=taxes[2].heavy_tax; %>
+  </span>
+
+  <span>
+    <% var title_h=taxes[3].title; %>
+  </span>
+  <span>
+    <% var tax_free_h=taxes[3].tax_free; %>
+  </span>
+  <span>
+    <% var taxable_h=taxes[3].taxable; %>
+  </span>
+  <span>
+    <% var heavy_tax_h=taxes[3].heavy_tax; %>
+  </span>
+
+  <span>
+    <% var title_j=taxes[4].title; %>
+  </span>
+  <span>
+    <% var tax_free_j=taxes[4].tax_free; %>
+  </span>
+  <span>
+    <% var taxable_j=taxes[4].taxable; %>
+  </span>
+  <span>
+    <% var heavy_tax_j=taxes[4].heavy_tax; %>
+  </span>
+
+  <span>
+    <% var title_d=taxes[5].title; %>
+  </span>
+  <span>
+    <% var tax_free_d=taxes[5].tax_free; %>
+  </span>
+  <span>
+    <% var taxable_d=taxes[5].taxable; %>
+  </span>
+  <span>
+    <% var heavy_tax_d=taxes[5].heavy_tax; %>
+  </span>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', { 'packages': ['bar'] });
+
+    // Draw the stack chart for taxes distribution when Charts is loaded.
+    google.charts.setOnLoadCallback(drawTaxesChart);
+
+    // variables: 
+
+    var t_c = ' <%= title_c %> ';       //Center district:
+    var a_c =   <%= tax_free_c  %>;       //var test is now assigned to getTest which will only work on browsers
+    var b_c =   <%= taxable_c  %>;     //var test is now assigned to getTest which will only work on browsers       
+    var c_c =   <%= heavy_tax_c  %>;     //var test is now assigned to getTest which will only work on browsers
+
+    var t_n = ' <%= title_n %> ';       //North district:
+    var a_n =   <%= tax_free_n  %>;      //var test is now assigned to getTest which will only work on browsers
+    var b_n =   <%= taxable_n  %>;     //var test is now assigned to getTest which will only work on browsers       
+    var c_n =   <%= heavy_tax_n  %>;     //var test is now assigned to getTest which will only work on browsers
+
+    var t_s = ' <%= title_s %> ';       //South district:
+    var a_s =   <%= tax_free_s  %>;       //var test is now assigned to getTest which will only work on browsers
+    var b_s =   <%= taxable_s  %>;     //var test is now assigned to getTest which will only work on browsers       
+    var c_s =   <%= heavy_tax_s  %>;     //var test is now assigned to getTest which will only work on browsers
+
+    var t_h = ' <%= title_h %> ';       //Haifa district:
+    var a_h =   <%= tax_free_h  %>;       //var test is now assigned to getTest which will only work on browsers
+    var b_h =   <%= taxable_h  %>;     //var test is now assigned to getTest which will only work on browsers       
+    var c_h =   <%= heavy_tax_h  %>;     //var test is now assigned to getTest which will only work on browsers
+
+    var t_j = ' <%= title_j %> ';       //Jerusalem district:
+    var a_j =   <%= tax_free_j  %>;       //var test is now assigned to getTest which will only work on browsers
+    var b_j =   <%= taxable_j  %>;     //var test is now assigned to getTest which will only work on browsers       
+    var c_j =   <%= heavy_tax_j  %>;     //var test is now assigned to getTest which will only work on browsers
+
+    var t_d = ' <%= title_d %> ';       //Dan district:
+    var a_d =   <%= tax_free_d  %>;       //var test is now assigned to getTest which will only work on browsers
+    var b_d =   <%= taxable_d  %>;     //var test is now assigned to getTest which will only work on browsers       
+    var c_d =   <%= heavy_tax_d  %>;     //var test is now assigned to getTest which will only work on browsers
+
+
+    //################################### TAXES DISTRIBUTION ###################################
+
+    function drawTaxesChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['District', 'Tax Free', 'Taxable package', 'VAT, purchase Tax & Customs'],
+        ['Center', a_c, b_c, c_c],
+        ['North', a_n, b_n, c_n],
+        ['South', a_s, b_s, c_s],
+        ['Haifa', a_h, b_h, c_h],
+        ['Jerusalem', a_j, b_j, c_j],
+        ['Dan', a_d, b_d, c_d]
+      ]);
+
+      var options = {
+        chart: {
+          title: 'Tax billing type distribution by districts',
+          subtitle: '',
+        }
+      };
+
+      var chart = new google.charts.Bar(document.getElementById('tax_dist'));
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+  </script>
+</head>
+
+<body>
+  <!--Table and divs that hold the pie charts-->
+  <table class="columns" margin-left: auto; margin-right: auto;>
+    <tr style="padding-left: 2ex;">
+      <td style="margin-left: 10ex;">
+        <div id="tax_dist" style="width: 1530px; height: 500px; border: 4px solid rgb(128, 86, 9)">
+        </div>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>

@@ -1,67 +1,34 @@
 const fs = require('fs')
-
-// function getTable() {
-//     var json_f = fs.readFileSync('./dataset.json', { encoding: 'utf8', flag: 'r' })
-//     var jsonString = JSON.parse(json_f);
-//     var items = jsonString['object']['associations']['items']
-//     // console.log("inside" ,items)
-
-//     jsonString['object']['associations']['rules'].forEach(function (row) {
-//         var lhs = row['lhs'][0]
-//         row['lhs'] = items[lhs]['name']
-//         var rhs = row['rhs'][0]
-//         row['rhs'] = items[rhs]['name']
-//     });
-//     // console.log("inside" ,items)
-
-//     return jsonString
-// }
-
-// var x = getTable()
-// console.log(x);
+var redis = require('redis');
+var publisher = redis.createClient();
 
 
 function getTable() {
-    var json_f = fs.readFileSync('./dataset.json', { encoding: 'utf8', flag: 'r' })
-    var jsonString = JSON.parse(json_f);
-    var items = jsonString['object']['associations']['items']
-    // console.log("inside" ,items)
+    console.log('function three');
+    var JS = fs.readFileSync(__dirname + '/dataset.json', 'utf8');
+    var jsonString = JSON.parse(JS);
+    var items = jsonString['object']['associations']['items'];
 
-    jsonString['object']['associations']['rules'].map(row => {
-        var lhs = row['lhs'][0]
-        row['lhs'] = items[lhs]['name']
-        var rhs = row['rhs'][0]
-        row['rhs'] = items[rhs]['name']
+    if (jsonString['object']['associations']['rules'] !== undefined) {
+
+        jsonString['object']['associations']['rules'].forEach(row => {
+            var lhs = row['lhs'][0]
+            row['lhs'] = items[lhs]['name']
+            var rhs = row['rhs'][0]
+            row['rhs'] = items[rhs]['name']
+        });
+        jsonString = jsonString['object']['associations']['rules'];
+    }
+    console.log("get table done!");
+    publisher.publish("table", JSON.stringify(jsonString), function () {
+
     });
-    // console.log("inside" ,items)
 
-    return jsonString
+
+    return jsonString;
+
 }
 
-var x = getTable()
-console.log(x);
 
 
-
-// function getTable() {
-//     fs.readFileSync('./dataset.json', 'utf8', (err, jsonString) => {
-//         if (err) {
-//             console.log("File read failed:", err)
-//             return
-//         }
-//         var jsonString = JSON.parse(jsonString);
-//         var items = jsonString['object']['associations']['items']
-
-//         jsonString['object']['associations']['rules'].forEach(row => {
-//             var lhs = row['lhs'][0]
-//             row['lhs'] = items[lhs]['name']
-//             var rhs = row['rhs'][0]
-//             row['rhs'] = items[rhs]['name']
-//         });
-
-//         console.log(jsonString['object']['associations']['rules']);
-//         return jsonString
-//     })
-// }
-// var x  = getTable()
-// console.log(x);
+module.exports.getTable = getTable;

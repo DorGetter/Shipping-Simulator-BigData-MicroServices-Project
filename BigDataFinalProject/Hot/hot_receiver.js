@@ -1,114 +1,283 @@
 var express = require('express');
 var app = require('express')();
 var server = require('http').Server(app);
-var redis = require('redis');
-var redisClient = redis.createClient();
-var DownloadFireBase = require('./Firebase/fireBaseAssist')
+var redis1 = require('redis');
+var redis2 = require('redis');
+var redisClient_mes = redis1.createClient();
+var subscriber = redis2.createClient();
 
-redisClient.subscribe('message');
+
+var firebaseMain = require('./Firebase/fireBaseAssist.js')
+
+redisClient_mes.subscribe('message');
 
 var data = {
     cards: [
-        { title: "North", value: 0, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "arrow_back" },
-        { title: "Center", value: 1, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "addiccall" },
-        { title: "South", value: 2, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" },
-        { title: "Haifa", value: 3, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" },
-        { title: "Jerusalem", value: 4, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" },
-        { title: "Dan", value: 5, unit: "Packages", fotterIcon: "", fotterText: "AVG Capacity", icon: "adb" }
+        { title: "Center", value: 0, unit: "Packages", fotterIcon: "inventory_2", fotterText: "AVG Capacity", icon: "local_shipping" },
+        { title: "North", value: 0, unit: "Packages", fotterIcon: "inventory_2", fotterText: "AVG Capacity", icon: "local_shipping" },
+        { title: "South", value: 0, unit: "Packages", fotterIcon: "inventory_2", fotterText: "AVG Capacity", icon: "local_shipping" },
+        { title: "Haifa", value: 0, unit: "Packages", fotterIcon: "inventory_2", fotterText: "AVG Capacity", icon: "local_shipping" },
+        { title: "Jerusalem", value: 0, unit: "Packages", fotterIcon: "inventory_2", fotterText: "AVG Capacity", icon: "local_shipping" },
+        { title: "Dan", value: 0, unit: "Packages", fotterIcon: "inventory_2", fotterText: "AVG Capacity", icon: "local_shipping" }
     ],
 
 
     sizes: [
-        { title: 'center', small: 12, medium: 4, large: 23 },
-        { title: 'north', small: 20, medium: 10, large: 40 },
-        { title: 'south', small: 30, medium: 10, large: 120 },
-        { title: 'haifa', small: 4, medium: 53, large: 676 },
-        { title: 'jerusalem', small: 58, medium: 235, large: 1 },
-        { title: 'dan', small: 245, medium: 987, large: 3890 }
+        { title: 'center', small: 0, medium: 0, large: 0 },
+        { title: 'north', small: 0, medium: 0, large: 0 },
+        { title: 'south', small: 0, medium: 0, large: 0 },
+        { title: 'haifa', small: 0, medium: 0, large: 0 },
+        { title: 'jerusalem', small: 0, medium: 0, large: 0 },
+        { title: 'dan', small: 0, medium: 0, large: 0 }
+    ],
+
+    taxes: [
+        { title: 'center', tax_free: 0, taxable: 0, heavy_tax: 0 },
+        { title: 'north', tax_free: 0, taxable: 0, heavy_tax: 0 },
+        { title: 'south', tax_free: 0, taxable: 0, heavy_tax: 0 },
+        { title: 'haifa', tax_free: 0, taxable: 0, heavy_tax: 0 },
+        { title: 'jerusalem', tax_free: 0, taxable: 0, heavy_tax: 0 },
+        { title: 'dan', tax_free: 0, taxable: 0, heavy_tax: 0 }
     ]
 }
 
 
 
-function setTotalSizes(msg) {
-    if (msg.destinationRegion == 'north') {
-        data.cards[0].value += 1
-    }
-    else if (msg.destinationRegion == 'center') {
-        data.cards[1].value += 1
-    }
-    else if (msg.destinationRegion == 'south') {
-        data.cards[2].value += 1
-    }
-    else if (msg.destinationRegion == 'haifa') {
-        data.cards[3].value += 1
-    }
-    else if (msg.destinationRegion == 'jerusalem') {
-        data.cards[4].value += 1
-    }
-    else { data.cards[5].value += 1 }
-}
-
-
-function setPackageSizeDistribution(msg) {
-
-    if (msg.destinationRegion == 'center') {
-        if (msg.size == 'S') { data.sizes_center[0].value += 1; }
-        else if (msg.size == 'M') { data.sizes_center[1].value += 1; }
-        else { data.sizes_center[2].value += 1; }
-    }
-    else if (msg.destinationRegion == 'north') {
-
-        if (msg.size == 'S') { data.sizes_north[0].value += 1; }
-        else if (msg.size == 'M') { data.sizes_north[1].value += 1; }
-        else { data.sizes_north[2].value += 1; }
-    }
-    else if (msg.destinationRegion == 'south') {
-
-        if (msg.size == 'S') { data.sizes_south[0].value += 1; }
-        else if (msg.size == 'M') { data.sizes_south[1].value += 1; }
-        else { data.sizes_south[2].value += 1; }
-    }
-    else if (msg.destinationRegion == 'haifa') {
-
-        if (msg.size == 'S') { data.sizes_haifa[0].value += 1; }
-        else if (msg.size == 'M') { data.sizes_haifa[1].value += 1; }
-        else { data.sizes_haifa[2].value += 1; }
-    }
-    else if (msg.destinationRegion == 'jerusalem') {
-
-        if (msg.size == 'S') { data.sizes_jerusalem[0].value += 1; }
-        else if (msg.size == 'M') { data.sizes_jerusalem[1].value += 1; }
-        else { data.sizes_jerusalem[2].value += 1; }
+async function setTotalSizes(msg, operation) {
+    if (operation == "0") {
+        if (msg.destinationRegion == 'center') {
+            data.cards[0].value += 1
+        }
+        else if (msg.destinationRegion == 'north') {
+            data.cards[1].value += 1
+        }
+        else if (msg.destinationRegion == 'south') {
+            data.cards[2].value += 1
+        }
+        else if (msg.destinationRegion == 'haifa') {
+            data.cards[3].value += 1
+        }
+        else if (msg.destinationRegion == 'jerusalem') {
+            data.cards[4].value += 1
+        }
+        else if (msg.destinationRegion == 'dan') {
+            data.cards[5].value += 1
+        }
+        else { console.log("cards + data corupted"); }
     }
     else {
-        if (msg.size == 'S') { data.sizes_dan[0].value += 1; }
-        else if (msg.size == 'M') { data.sizes_dan[1].value += 1; }
-        else { data.sizes_dan[2].value += 1; }
+
+        if (msg.destinationRegion == 'center') {
+            data.cards[0].value -= 1
+        }
+        else if (msg.destinationRegion == 'north') {
+            data.cards[1].value -= 1
+        }
+        else if (msg.destinationRegion == 'south') {
+            data.cards[2].value -= 1
+        }
+        else if (msg.destinationRegion == 'haifa') {
+            data.cards[3].value -= 1
+        }
+        else if (msg.destinationRegion == 'jerusalem') {
+            data.cards[4].value -= 1
+        }
+        else if (msg.destinationRegion == 'dan') {
+            data.cards[5].value -= 1
+        }
+        else { console.log("cards - data corupted" + msg.destinationRegion); }
+    }
+}
+
+async function setPackageSizeDistribution(msg, operation) {
+    if (operation == "0") {
+        if (msg.destinationRegion == 'center') {
+            if (msg.size == 'S') { data.sizes[0]['small'] += 1; }
+            else if (msg.size == 'M') { data.sizes[0]['medium'] += 1; }
+            else { data.sizes[0]['large'] += 1; }
+        }
+        else if (msg.destinationRegion == 'north') {
+            if (msg.size == 'S') { data.sizes[1]['small'] += 1; }
+            else if (msg.size == 'M') { data.sizes[1]['medium'] += 1; }
+            else { data.sizes[1]['large'] += 1; }
+        }
+        else if (msg.destinationRegion == 'south') {
+            if (msg.size == 'S') { data.sizes[2]['small'] += 1; }
+            else if (msg.size == 'M') { data.sizes[2]['medium'] += 1; }
+            else { data.sizes[2]['large'] += 1; }
+        }
+        else if (msg.destinationRegion == 'haifa') {
+            if (msg.size == 'S') { data.sizes[3]['small'] += 1; }
+            else if (msg.size == 'M') { data.sizes[3]['medium'] += 1; }
+            else { data.sizes[3]['large'] += 1; }
+        }
+        else if (msg.destinationRegion == 'jerusalem') {
+            if (msg.size == 'S') { data.sizes[4]['small'] += 1; }
+            else if (msg.size == 'M') { data.sizes[4]['medium'] += 1; }
+            else { data.sizes[4]['large'] += 1; }
+        }
+        else if (msg.destinationRegion == 'dan') {
+            if (msg.size == 'S') { data.sizes[5]['small'] += 1; }
+            else if (msg.size == 'M') { data.sizes[5]['medium'] += 1; }
+            else { data.sizes[5]['large'] += 1; }
+        }
+        else { console.log("sizes + data corupted"); }
+
+    } else {
+        if (msg.destinationRegion == 'center') {
+            if (msg.size == 'S') { data.sizes[0]['small'] -= 1; }
+            else if (msg.size == 'M') { data.sizes[0]['medium'] -= 1; }
+            else { data.sizes[0]['large'] -= 1; }
+        }
+        else if (msg.destinationRegion == 'north') {
+
+            if (msg.size == 'S') { data.sizes[1]['small'] -= 1; }
+            else if (msg.size == 'M') { data.sizes[1]['medium'] -= 1; }
+            else { data.sizes[1]['large'] -= 1; }
+        }
+        else if (msg.destinationRegion == 'south') {
+
+            if (msg.size == 'S') { data.sizes[2]['small'] -= 1; }
+            else if (msg.size == 'M') { data.sizes[2]['medium'] -= 1; }
+            else { data.sizes[2]['large'] -= 1; }
+        }
+        else if (msg.destinationRegion == 'haifa') {
+
+            if (msg.size == 'S') { data.sizes[3]['small'] -= 1; }
+            else if (msg.size == 'M') { data.sizes[3]['medium'] -= 1; }
+            else { data.sizes[3]['large'] -= 1; }
+        }
+        else if (msg.destinationRegion == 'jerusalem') {
+
+            if (msg.size == 'S') { data.sizes[4]['small'] -= 1; }
+            else if (msg.size == 'M') { data.sizes[4]['medium'] -= 1; }
+            else { data.sizes[4]['large'] -= 1; }
+        }
+        else if (msg.destinationRegion == 'dan') {
+            if (msg.size == 'S') { data.sizes[5]['small'] -= 1; }
+            else if (msg.size == 'M') { data.sizes[5]['medium'] -= 1; }
+            else { data.sizes[5]['large'] -= 1; }
+        }
+        else { console.log("sizes - data corupted" + msg.destinationRegion); }
+    }
+}
+
+async function setPackageTaxDistribution(msg, operation) {
+    if (operation == "0") {
+
+        if (msg.destinationRegion == 'center') {
+            if (msg.importTax == 'Tax Free') { data['taxes'][0].tax_free += 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][0].taxable += 1; }
+            else { data['taxes'][0].heavy_tax += 1; }
+        }
+        else if (msg.destinationRegion == 'north') {
+
+            if (msg.importTax == 'Tax Free') { data['taxes'][1].tax_free += 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][1].taxable += 1; }
+            else { data['taxes'][1].heavy_tax += 1; }
+        }
+        else if (msg.destinationRegion == 'south') {
+
+            if (msg.importTax == 'Tax Free') { data['taxes'][2].tax_free += 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][2].taxable += 1; }
+            else { data['taxes'][2].heavy_tax += 1; }
+        }
+        else if (msg.destinationRegion == 'haifa') {
+
+            if (msg.importTax == 'Tax Free') { data['taxes'][3].tax_free += 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][3].taxable += 1; }
+            else { data['taxes'][3].heavy_tax += 1; }
+        }
+        else if (msg.destinationRegion == 'jerusalem') {
+
+            if (msg.importTax == 'Tax Free') { data['taxes'][4].tax_free += 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][4].taxable += 1; }
+            else { data['taxes'][4].heavy_tax += 1; }
+        }
+        else if (msg.destinationRegion == 'dan') {
+            if (msg.importTax == 'Tax Free') { data['taxes'][5].tax_free += 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][5].taxable += 1; }
+            else { data['taxes'][5].heavy_tax += 1; }
+        }
+        else { console.log("taxes + data corupted "); }
+
+    } else {
+
+        if (msg.destinationRegion == 'center') {
+            if (msg.importTax == 'Tax Free') { data['taxes'][0].tax_free -= 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][0].taxable -= 1; }
+            else { data['taxes'][0].heavy_tax -= 1; }
+        }
+        else if (msg.destinationRegion == 'north') {
+
+            if (msg.importTax == 'Tax Free') { data['taxes'][1].tax_free -= 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][1].taxable -= 1; }
+            else { data['taxes'][1].heavy_tax -= 1; }
+        }
+        else if (msg.destinationRegion == 'south') {
+
+            if (msg.importTax == 'Tax Free') { data['taxes'][2].tax_free -= 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][2].taxable -= 1; }
+            else { data['taxes'][2].heavy_tax -= 1; }
+        }
+        else if (msg.destinationRegion == 'haifa') {
+
+            if (msg.importTax == 'Tax Free') { data['taxes'][3].tax_free -= 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][3].taxable -= 1; }
+            else { data['taxes'][3].heavy_tax -= 1; }
+        }
+        else if (msg.destinationRegion == 'jerusalem') {
+
+            if (msg.importTax == 'Tax Free') { data['taxes'][4].tax_free -= 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][4].taxable -= 1; }
+            else { data['taxes'][4].heavy_tax += 1; }
+        }
+        else if (msg.destinationRegion == 'dan') {
+            if (msg.importTax == 'Tax Free') { data['taxes'][5].tax_free -= 1; }
+            else if (msg.importTax == 'Taxable package') { data['taxes'][5].taxable -= 1; }
+            else { data['taxes'][5].heavy_tax -= 1; }
+        }
+        else { console.log("taxes - data corupted " + msg.destinationRegion); }
+
+
     }
 }
 
 
-redisClient.on("message", function (channel, msg) {
+
+
+
+redisClient_mes.on('connect', function () {
+    console.log('Receiver mes connected to Redis');
+});
+
+
+redisClient_mes.on("message", async function (channel, msg) {
     var msg = JSON.parse(msg);
-    setTotalSizes(msg);
-    setPackageSizeDistribution(msg);
-    console.log(msg)
+    await setTotalSizes(msg, "0");
+    await setPackageSizeDistribution(msg, "0");
+    await setPackageTaxDistribution(msg, "0")
 });
 
 
+subscriber.on("message", function (channel, message) {
+    console.log("Message: " + message + " on channel: " + channel + " is arrive!");
 
+    var msg2 = JSON.parse(message);
+    console.log(msg2.destinationRegion);
+    setTotalSizes(msg2, "1");
+    setPackageSizeDistribution(msg2, "1");
+    setPackageTaxDistribution(msg2, "1")
 
-
-redisClient.on('connect', function () {
-    console.log('Receiver connected to Redis');
 });
+subscriber.subscribe("notification");
+
 
 server.listen(6061, function () {
     console.log('receiver is running on port 6061');
 });
 
-// ------ dash board ----- //
+// ------ dashboard ----- //
 
 app.listen(3000, () => {
     console.log(`Example app listening at http://localhost:3000}`)
@@ -119,24 +288,30 @@ app.use(express.static('public')) //who is our view engine
 
 
 
+setInterval(async function () {
+    var a = firebaseMain.firebaseMain()
+}, 8000);
 
-function check_arrivals(){
-    setTimeout(function () {
-        DownloadFireBase.firebaseMain()
 
-        // download from firebase 
-        // get all packages info. 
-        // add the data from packages to dashboard (add fields to 'data')
-        // delete from firebase 
-        // delete from redis
+const fetch = require('node-fetch');
+const { get } = require('http');
 
-    }, 50000)
-}
+
+
+app.get('/analytics', (req, res) => {
+
+    res.fetch()
+})
+
+
 
 // Rendering the dashboard as the defult page. localhost:3000
 app.get('/', (req, res) => {
-    check_arrivals()
     // https://materializecss.com/icons.html <- icons
     res.render('pages/dashboard', data);
 
 })
+
+
+
+

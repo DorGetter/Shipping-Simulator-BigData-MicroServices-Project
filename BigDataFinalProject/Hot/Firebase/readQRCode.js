@@ -29,7 +29,6 @@ async function readQRCodes() {
     let ans = getFilesNames()
     console.log(ans);
 
-
     await Promise.all(f_Names.map(async (file) => {
         const img = await Jimp.read(fs.readFileSync(path.resolve(__dirname + '/SavedQRCodes/' + file)));
         const qr = new QrCode();

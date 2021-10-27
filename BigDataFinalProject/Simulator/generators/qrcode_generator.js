@@ -8,12 +8,12 @@ const saveQrcodelocal = (string, filename) => {
         string,
         {
              })
-             console.log("saveQrcode");
+             console.log("1 saveQrcode");
 }
 
 async function generate_pack_qrcodeImg(package, filename){
     await saveQrcodelocal(package, filename);
-    console.log("before saveQrcode");
+    console.log("2 return saveQrcode");
     return "all ok"; 
 
 }

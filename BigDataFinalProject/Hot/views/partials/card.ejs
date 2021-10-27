@@ -2,17 +2,20 @@
   <div class="card card-stats">
     <div class="card-header card-header-warning card-header-icon">
       <div class="card-icon">
-        <i class="material-icons">
+        <style>
+          .card{
+            background-color: #ffd29e;
+          }  
+        </style>
+        <i class="material-icons" style="background-color: rgb(219, 155, 95); color: rgb(255, 255, 255);">
           <%= icon %>
         </i>
       </div>
-      <p class="card-category">
+      <p class="card-category" style="color: rgb(131, 81, 6); font-family: Georgia; font-size: 25px;">
         <%= title %>
       </p>
-      <h3 class="card-title">
+      <h3 class="card-title" style="color: rgb(0, 0, 0); font-family: Georgia; font-size: 30px;">
         <%= value %>
-
-
           <small>
             <%= unit %>
           </small>

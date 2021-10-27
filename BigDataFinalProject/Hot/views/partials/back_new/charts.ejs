@@ -1,0 +1,345 @@
+<html>
+
+<head>
+    <span>
+        <% var title_c=sizes[0].title; %>
+    </span>
+    <span>
+        <% var small_c=sizes[0].small; %>
+    </span>
+    <span>
+        <% var medium_c=sizes[0].medium; %>
+    </span>
+    <span>
+        <% var large_c=sizes[0].large; %>
+    </span>
+
+    <span>
+        <% var title_n=sizes[1].title; %>
+    </span>
+    <span>
+        <% var small_n=sizes[1].small; %>
+    </span>
+    <span>
+        <% var medium_n=sizes[1].medium; %>
+    </span>
+    <span>
+        <% var large_n=sizes[1].large; %>
+    </span>
+
+    <span>
+        <% var title_s=sizes[2].title; %>
+    </span>
+    <span>
+        <% var small_s=sizes[2].small; %>
+    </span>
+    <span>
+        <% var medium_s=sizes[2].medium; %>
+    </span>
+    <span>
+        <% var large_s=sizes[2].large; %>
+    </span>
+
+    <span>
+        <% var title_h=sizes[3].title; %>
+    </span>
+    <span>
+        <% var small_h=sizes[3].small; %>
+    </span>
+    <span>
+        <% var medium_h=sizes[3].medium; %>
+    </span>
+    <span>
+        <% var large_h=sizes[3].large; %>
+    </span>
+
+    <span>
+        <% var title_j=sizes[4].title; %>
+    </span>
+    <span>
+        <% var small_j=sizes[4].small; %>
+    </span>
+    <span>
+        <% var medium_j=sizes[4].medium; %>
+    </span>
+    <span>
+        <% var large_j=sizes[4].large; %>
+    </span>
+
+    <span>
+        <% var title_d=sizes[5].title; %>
+    </span>
+    <span>
+        <% var small_d=sizes[5].small; %>
+    </span>
+    <span>
+        <% var medium_d=sizes[5].medium; %>
+    </span>
+    <span>
+        <% var large_d=sizes[5].large; %>
+    </span>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+        // Load Charts and the corechart package.
+        google.charts.load('current', { 'packages': ['corechart'] });
+        // google.charts.load('current', {'packages':['bar']});
+
+        // // Draw the stack chart for taxes distribution when Charts is loaded.
+        // google.charts.setOnLoadCallback(drawTaxesChart);
+
+        // Draw the pie chart for Center when Charts is loaded.
+        google.charts.setOnLoadCallback(drawCenterChart);
+
+        // Draw the pie chart for North when Charts is loaded.
+        google.charts.setOnLoadCallback(drawNorthChart);
+
+        // Draw the pie chart for South when Charts is loaded.
+        google.charts.setOnLoadCallback(drawSouthChart);
+
+        // Draw the pie chart for Haifa when Charts is loaded.
+        google.charts.setOnLoadCallback(drawHaifaChart);
+
+        // Draw the pie chart for Jerusalem when Charts is loaded.
+        google.charts.setOnLoadCallback(drawJerusalemChart);
+
+        // Draw the pie chart for Dan when Charts is loaded.
+        google.charts.setOnLoadCallback(drawDanChart);
+
+
+        // variables: 
+
+        var t_c = ' <%= title_c %> ';       //Center district:
+        var s_c =   <%= small_c  %>;       //var test is now assigned to getTest which will only work on browsers
+        var m_c =   <%= medium_c  %>;     //var test is now assigned to getTest which will only work on browsers       
+        var l_c =   <%= large_c  %>;     //var test is now assigned to getTest which will only work on browsers
+
+        var t_n = ' <%= title_c %> ';       //North district:
+        var s_n =   <%= small_n  %>;      //var test is now assigned to getTest which will only work on browsers
+        var m_n =   <%= medium_n  %>;     //var test is now assigned to getTest which will only work on browsers       
+        var l_n =   <%= large_n  %>;     //var test is now assigned to getTest which will only work on browsers
+
+        var t_s = ' <%= title_c %> ';       //South district:
+        var s_s =   <%= small_s  %>;       //var test is now assigned to getTest which will only work on browsers
+        var m_s =   <%= medium_s  %>;     //var test is now assigned to getTest which will only work on browsers       
+        var l_s =   <%= large_s  %>;     //var test is now assigned to getTest which will only work on browsers
+
+        var t_h = ' <%= title_c %> ';       //Haifa district:
+        var s_h =   <%= small_h  %>;       //var test is now assigned to getTest which will only work on browsers
+        var m_h =   <%= medium_h  %>;     //var test is now assigned to getTest which will only work on browsers       
+        var l_h =   <%= large_h  %>;     //var test is now assigned to getTest which will only work on browsers
+
+        var t_j = ' <%= title_c %> ';       //Jerusalem district:
+        var s_j =   <%= small_j  %>;       //var test is now assigned to getTest which will only work on browsers
+        var m_j =   <%= medium_j  %>;     //var test is now assigned to getTest which will only work on browsers       
+        var l_j =   <%= large_j  %>;     //var test is now assigned to getTest which will only work on browsers
+
+        var t_d = ' <%= title_c %> ';       //Dan district:
+        var s_d =   <%= small_d  %>;       //var test is now assigned to getTest which will only work on browsers
+        var m_d =   <%= medium_d  %>;     //var test is now assigned to getTest which will only work on browsers       
+        var l_d =   <%= large_d  %>;     //var test is now assigned to getTest which will only work on browsers
+
+
+        //################################### CENTER ###################################
+        // Callback that draws the pie chart for Center district packages' size distribution
+        function drawCenterChart() {
+
+            // Create the data table for Center district
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'size');
+            data.addColumn('number', 'packages');
+            data.addRows([
+                ['S', s_c],
+                ['M', m_c],
+                ['L', l_c]
+            ]);
+
+            // Set options for chart
+            var options = {
+                title: 'Center district:\n Packages size distribution',
+                is3D: true,
+                width: 270,
+                height: 270
+            };
+
+            // Instantiate and draw the chart
+            var chart = new google.visualization.PieChart(document.getElementById('center_size_dist'));
+            chart.draw(data, options);
+        }
+
+        //################################### NORTH ###################################
+        // Callback that draws the pie chart for North district packages' size distribution
+        function drawNorthChart() {
+
+            // Create the data table for North district
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'size');
+            data.addColumn('number', 'packages');
+            data.addRows([
+                ['S', s_n],
+                ['M', m_n],
+                ['L', l_n]
+            ]);
+
+            // Set options for chart
+            var options = {
+                title: 'North district:\n Packages size distribution',
+                is3D: true,
+                width: 270,
+                height: 270
+            };
+
+            // Instantiate and draw the chart
+            var chart = new google.visualization.PieChart(document.getElementById('north_size_dist'));
+            chart.draw(data, options);
+        }
+
+        //################################### SOUTH ###################################
+        // Callback that draws the pie chart for South district packages' size distribution
+        function drawSouthChart() {
+
+            // Create the data table for South district
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'size');
+            data.addColumn('number', 'packages');
+            data.addRows([
+                ['S', s_s],
+                ['M', m_s],
+                ['L', l_s]
+            ]);
+
+            // Set options for chart
+            var options = {
+                title: 'South district:\n Packages size distribution',
+                is3D: true,
+                width: 270,
+                height: 270
+            };
+
+            // Instantiate and draw the chart
+            var chart = new google.visualization.PieChart(document.getElementById('south_size_dist'));
+            chart.draw(data, options);
+        }
+
+        //################################### HAIFA ###################################
+        // Callback that draws the pie chart for South district packages' size distribution
+        function drawHaifaChart() {
+
+            // Create the data table for Haifa district
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'size');
+            data.addColumn('number', 'packages');
+            data.addRows([
+                ['S', s_h],
+                ['M', m_h],
+                ['L', l_h]
+            ]);
+
+            // Set options for chart
+            var options = {
+                title: 'Haifa district:\n Packages size distribution',
+                is3D: true,
+                width: 270,
+                height: 270
+            };
+
+            // Instantiate and draw the chart
+            var chart = new google.visualization.PieChart(document.getElementById('haifa_size_dist'));
+            chart.draw(data, options);
+        }
+
+        //################################### JERUSALEM ###################################
+        // Callback that draws the pie chart for Jerusalem district packages' size distribution
+        function drawJerusalemChart() {
+
+            // Create the data table for Jerusalem district
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'size');
+            data.addColumn('number', 'packages');
+            data.addRows([
+                ['S', s_j],
+                ['M', m_j],
+                ['L', l_j]
+            ]);
+
+            // Set options for chart
+            var options = {
+                title: 'Jerusalem district:\n Packages size distribution',
+                is3D: true,
+                width: 270,
+                height: 270
+            };
+
+            // Instantiate and draw the chart
+            var chart = new google.visualization.PieChart(document.getElementById('jerusalem_size_dist'));
+            chart.draw(data, options);
+        }
+
+        //################################### DAN ###################################
+        // Callback that draws the pie chart for Dan district packages' size distribution
+        function drawDanChart() {
+
+            // Create the data table for Dan district
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'size');
+            data.addColumn('number', 'packages');
+            data.addRows([
+                ['S', s_d],
+                ['M', m_d],
+                ['L', l_d]
+            ]);
+
+            // Set options for chart
+            var options = {
+                title: 'Dan district:\n Packages size distribution',
+                is3D: true,
+                width: 270,
+                height: 270
+            };
+
+            // Instantiate and draw the chart
+            var chart = new google.visualization.PieChart(document.getElementById('dan_size_dist'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+
+<body>
+    <!--Table and divs that hold the pie charts-->
+    <table class="columns" margin-left: auto; margin-right: auto;>
+        <!-- <style>html{visibility: hidden;opacity:0;}</style> -->
+        <tr style="padding-left: 2ex;">
+            <td style="margin-left: 10ex;">
+                <div id="center_size_dist" style="border: 4px solid rgb(0, 140, 255)"></div>
+            </td>
+
+            <td style="margin-left: 10ex;">
+                <div id="north_size_dist" style="border: 4px solid rgb(0, 140, 255)"></div>
+            </td>
+
+            <td style="margin-left: 10ex;">
+                <div id="south_size_dist" style="border: 4px solid rgb(0, 140, 255)"></div>
+            </td>
+
+            </td>
+            <td style="margin-left: 10ex;">
+                <div id="haifa_size_dist" style="border: 4px solid rgb(0, 140, 255)"></div>
+            </td>
+
+            </td>
+            <td style="margin-left: 10ex;">
+                <div id="jerusalem_size_dist" style="border: 4px solid rgb(0, 140, 255)"></div>
+            </td>
+
+            </td>
+            <td style="margin-left: 10ex;">
+                <div id="dan_size_dist" style="border: 4px solid rgb(0, 140, 255)"></div>
+            </td>
+
+        </tr>
+    </table>
+</body>
+
+</html>

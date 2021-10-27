@@ -9,7 +9,7 @@ var association = new bigml.LocalAssociation(
     'association/616881b199dfe70749007375', new bigml.BigML("bigdatacourse2021", "ad08ca86c30c5a51417e95ea2dd5e12ab6d461c7", { "domain": "bigml.io" }));
 
 
-async function get_prediction(input_Data) {
+async function get_prediction(input_Data, callback) {
 
     var inputData = {
         "field1": input_Data
@@ -24,13 +24,13 @@ async function get_prediction(input_Data) {
             line.push(data[index2].score)
         }
         console.log("line")
-        return line
+        callback(line)
     }));
  return line
 }
 
-var ans = get_prediction("Laptop")
-console.log(ans)
+// var ans = get_prediction("Laptop")
+// console.log(ans)
 
 module.exports = {
     get_prediction: get_prediction
